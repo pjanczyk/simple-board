@@ -8,13 +8,17 @@
             <small>
                 We currently have {{ total_threads }} thread{{ total_threads|pluralize }}
                 and {{ total_post }} post{{ total_post|pluralize }}
+                created by {{ total_users }} user{{ total_users|pluralize }}
             </small>
         </div>
     </div>
 
-    <a href="{% url 'thread_create' 0 %}" class="btn btn-primary btn-sm box-shadow" role="button">
-        <i class="fas fa-plus"></i> New thread
-    </a>
+    <div class="my-3 p-3 rounded box-shadow alert alert-primary">
+        <h6 class="mb-3">Sign up to create a new thread or reply in an existing one</h6>
+        <a class="btn btn-primary btn-sm ml-auto" href="{% url 'register' %}">Sign up</a>
+    </div>
+
+    {% include 'boards/parts/new_thread_button.html' %}
 
     {% if category.category_set.count == 0 and category.thread_set.count == 0 %}
         <div class="my-3 p-3 bg-white rounded box-shadow">
@@ -30,8 +34,6 @@
         {% include 'boards/parts/thread_list.html' with header='Uncategorized threads' threads=threads only %}
     {% endif %}
 
-    <a href="{% url 'thread_create' 0 %}" class="btn btn-primary btn-sm box-shadow" role="button">
-        <i class="fas fa-plus"></i> New thread
-    </a>
+    {% include 'boards/parts/new_thread_button.html' %}
 
 {% endblock %}

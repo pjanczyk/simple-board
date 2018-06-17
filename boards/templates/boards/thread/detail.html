@@ -30,16 +30,20 @@
                     {% endif %}
                     <span class="d-block">{{ post.created_at }}</span>
                 </p>
-                <div class="dropdown" style="margin-right: -0.5rem">
+                {% if request.user.id == post.author_id %}
+                    <div class="dropdown" style="margin-right: -0.5rem">
                     <span class="btn btn-link text-muted" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-v"></i>
                     </span>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{% url 'post_edit' post.id %}">Edit</a>
-                        <a class="dropdown-item" href="{% url 'post_delete' post.id %}">Delete</a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'post_edit' post.id %}">Edit</a>
+                            {% if not post.is_original_post %}
+                                <a class="dropdown-item" href="{% url 'post_delete' post.id %}">Delete</a>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
             <div class="mt-2">
                 {{ post.text }}
@@ -47,17 +51,18 @@
         </div>
     {% endfor %}
 
-    <div class="my-3 p-3 bg-white rounded box-shadow">
-        <h6 class="pb-2 mb-0">Reply</h6>
-        <form method="post" class="d-flex">
-            {% csrf_token %}
-            <textarea class="form-control" id="reply-text" rows="3" minlength="1" required
-                      name="{{ reply_form.text.html_name }}"></textarea>
-            <button type="submit" class="btn btn-primary d-block ml-2">Send</button>
-        </form>
-        {{ reply_form.non_field_errors }}
-        {{ reply_form.text.errors }}
-    </div>
-
+    {% if request.user.is_authenticated %}
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+            <h6 class="pb-2 mb-0">Reply</h6>
+            <form method="post" class="d-flex">
+                {% csrf_token %}
+                <textarea class="form-control" id="reply-text" rows="3" minlength="1" required
+                          name="{{ reply_form.text.html_name }}"></textarea>
+                <button type="submit" class="btn btn-primary d-block ml-2">Send</button>
+            </form>
+            {{ reply_form.non_field_errors }}
+            {{ reply_form.text.errors }}
+        </div>
+    {% endif %}
 
 {% endblock %}

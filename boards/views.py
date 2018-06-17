@@ -2,6 +2,7 @@ from typing import NamedTuple, List, Optional
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
@@ -19,12 +20,14 @@ def index(request):
 
     total_threads = Thread.objects.count()
     total_posts = Post.objects.count()
+    total_users = User.objects.count()
 
     return render(request, 'boards/index.html', {
         'categories': categories,
         'threads': threads,
         'total_threads': total_threads,
-        'total_post': total_posts
+        'total_post': total_posts,
+        'total_users': total_users
     })
 
 
@@ -44,6 +47,7 @@ def thread_detail(request, thread_id):
     thread = get_object_or_404(Thread, id=thread_id)
 
     if request.method == 'POST':
+        # Everyone logged in reply in a thread
         if not request.user.is_authenticated:
             return login_required()
 
@@ -78,6 +82,10 @@ def thread_create(request, category_id):
         category = None
 
     if request.method == 'POST':
+        # Everyone logged in can create a new thread
+        if not request.user.is_authenticated:
+            return login_required()
+
         thread_form = ThreadForm(request.POST)
         post_form = PostForm(request.POST)
 
@@ -113,6 +121,10 @@ def post_edit(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
     if request.method == 'POST':
+        # Only an author can edit their post
+        if not request.user.is_authenticated or request.user.id != post.author_id:
+            raise PermissionDenied
+
         form = PostForm(request.POST)
 
         if form.is_valid():
@@ -134,9 +146,13 @@ def post_delete(request, post_id):
     if post.pk == post.thread.original_post.pk:
         # An original post cannot be deleted.
         # A thread itself must be deleted instead.
-        raise Http404()
+        raise Http404
 
     if request.method == 'POST' and 'confirm_delete' in request.POST:
+        # Only an author can delete their post
+        if not request.user.is_authenticated or request.user.id != post.author_id:
+            raise PermissionDenied
+
         thread_id = post.thread_id
         post.delete()
         return HttpResponseRedirect(reverse('thread_detail', args=[thread_id]))

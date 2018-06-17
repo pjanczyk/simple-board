@@ -5,6 +5,9 @@ from django.utils import timezone
 
 
 class Category(models.Model):
+    class Meta:
+        ordering = ['name']
+
     name = models.TextField()
     description = models.TextField()
     parent_category = models.ForeignKey("Category", null=True, blank=True, on_delete=models.SET_NULL,
@@ -24,6 +27,9 @@ class Category(models.Model):
 
 
 class Thread(models.Model):
+    class Meta:
+        ordering = ['-created_at']
+
     title = models.TextField()
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField()
@@ -43,6 +49,9 @@ class Thread(models.Model):
 
 
 class Post(models.Model):
+    class Meta:
+        ordering = ['created_at']
+
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     text = models.TextField(validators=[MinLengthValidator(1)])
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
