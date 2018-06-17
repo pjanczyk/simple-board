@@ -7,8 +7,9 @@ from django.utils import timezone
 class Category(models.Model):
     class Meta:
         ordering = ['name']
+        verbose_name_plural = 'Categories'
 
-    name = models.TextField()
+    name = models.CharField(max_length=200)
     description = models.TextField()
     parent_category = models.ForeignKey("Category", null=True, blank=True, on_delete=models.SET_NULL,
                                         related_name='category_set')
@@ -30,7 +31,7 @@ class Thread(models.Model):
     class Meta:
         ordering = ['-created_at']
 
-    title = models.TextField()
+    title = models.CharField(max_length=200)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField()
     original_post = models.ForeignKey('Post', on_delete=models.PROTECT, related_name='+')
