@@ -1,0 +1,20 @@
+{% extends "boards/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <div style="max-width: 350px; width: 100%" class="mx-auto my-3 p-3 bg-white rounded box-shadow">
+
+        <h1 class="h3 mb-3 font-weight-normal">Create a new account</h1>
+
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            {% include 'boards/parts/form.html' with form=form %}
+            <input class="btn btn-primary btn-block mb-2" type="submit" value="Sign up">
+            <a href="{% url 'login' %}">Already have an account? Sign in</a>
+        </form>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'boards/base.html' %}
+
+{% block content %}
+
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded box-shadow">
+        <div class="lh-100">
+            <h6 class="mb-0 text-white lh-100">{{ category.name }}</h6>
+            <small>{{ category.description }}</small>
+        </div>
+    </div>
+
+    <a href="{% url 'thread_create' category.id %}" class="btn btn-primary btn-sm box-shadow" role="button">
+        <i class="fas fa-plus"></i> New thread
+    </a>
+
+    {% if category.category_set.count == 0 and category.thread_set.count == 0 %}
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+            <h6 class="my-1">No threads or subcategories</h6>
+        </div>
+    {% endif %}
+
+    {% if category.category_set.count %}
+        {% include 'boards/parts/category_list.html' with header='Subcategories' categories=category.category_set.all only %}
+    {% endif %}
+
+    {% if category.thread_set.count %}
+        {% include 'boards/parts/thread_list.html' with threads=category.thread_set.all only %}
+    {% endif %}
+
+    <a href="{% url 'thread_create' category.id %}" class="btn btn-primary btn-sm box-shadow" role="button">
+        <i class="fas fa-plus"></i> New thread
+    </a>
+
+{% endblock %}

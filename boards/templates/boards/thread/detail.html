@@ -1,0 +1,68 @@
+{% extends 'boards/base.html' %}
+
+{% block content %}
+
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded box-shadow">
+        <div class="lh-100">
+            <h6 class="mb-0 text-white lh-100">{{ thread.title }}</h6>
+            <small>
+                author:
+                {% if thread.original_author %}
+                    <a class="text-light"
+                       href="{% url 'user_detail' thread.original_author.username %}">@{{ thread.original_author.username }}</a>
+                {% else %}
+                    <strike>deleted</strike>
+                {% endif %}
+                » {{ thread.created_at }}
+            </small>
+        </div>
+    </div>
+
+    {% for post in thread.post_set.all %}
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+            <div class="media text-muted border-bottom border-gray">
+                <div class="d-flex align-items-center justify-content-center mr-2 rounded bg-secondary p-1 text-white"
+                     style="width: 32px; height: 32px;">
+                    <i class="fas fa-user fa-lg align-center"></i>
+                </div>
+                <p class="media-body pb-3 mb-0 small lh-125">
+                    {% if post.author.username %}
+                        <a href="{% url 'user_detail' post.author.username %}">
+                            <strong>@{{ post.author.username }}</strong>
+                        </a>
+                    {% else %}
+                        <strong><strike>deleted</strike></strong>
+                    {% endif %}
+                    <span class="d-block">{{ post.created_at }}</span>
+                </p>
+                <div class="dropdown" style="margin-right: -0.5rem">
+                    <span class="btn btn-link text-muted" id="dropdownMenuButton"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{% url 'post_edit' post.id %}">Edit</a>
+                        <a class="dropdown-item" href="{% url 'post_delete' post.id %}">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                {{ post.text }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h6 class="pb-2 mb-0">Reply</h6>
+        <form method="post" class="d-flex">
+            {% csrf_token %}
+            <textarea class="textarea-autosize form-control" id="reply-text" rows="3" minlength="1" required
+                      name="{{ reply_form.text.html_name }}"></textarea>
+            <button type="submit" class="btn btn-primary d-block ml-2">Send</button>
+        </form>
+        {{ reply_form.non_field_errors }}
+        {{ reply_form.text.errors }}
+    </div>
+
+
+{% endblock %}
