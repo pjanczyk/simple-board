@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from boards.models import Post, Thread
+from app.models import Post, Thread
 
 
 class PostForm(forms.ModelForm):

@@ -1,4 +1,4 @@
-{% extends 'boards/base.html' %}
+{% extends 'app/base.html' %}
 
 {% block content %}
 
@@ -6,8 +6,8 @@
         <h6 class="mb-3 pb-2 border-bottom">New thread</h6>
         <form method="post">
             {% csrf_token %}
-            {% include 'boards/parts/form.html' with form=thread_form %}
-            {% include 'boards/parts/form.html' with form=post_form %}
+            {% include 'app/parts/form.html' with form=thread_form %}
+            {% include 'app/parts/form.html' with form=post_form %}
             <button type="submit" class="btn btn-primary d-block ml-auto">Create thread</button>
         </form>
     </div>

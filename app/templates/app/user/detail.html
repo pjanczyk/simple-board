@@ -1,4 +1,4 @@
-{% extends 'boards/base.html' %}
+{% extends 'app/base.html' %}
 
 {% block content %}
 
@@ -12,6 +12,6 @@
         </div>
     </div>
 
-    {% include 'boards/parts/thread_list.html' with header="Created threads" threads=user_threads %}
+    {% include 'app/parts/thread_list.html' with header="Created threads" threads=user_threads %}
 
 {% endblock %}

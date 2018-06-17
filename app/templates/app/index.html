@@ -1,4 +1,4 @@
-{% extends 'boards/base.html' %}
+{% extends 'app/base.html' %}
 
 {% block content %}
 
@@ -18,7 +18,7 @@
         <a class="btn btn-primary btn-sm ml-auto" href="{% url 'register' %}">Sign up</a>
     </div>
 
-    {% include 'boards/parts/new_thread_button.html' %}
+    {% include 'app/parts/new_thread_button.html' %}
 
     {% if category.category_set.count == 0 and category.thread_set.count == 0 %}
         <div class="my-3 p-3 bg-white rounded box-shadow">
@@ -27,13 +27,13 @@
     {% endif %}
 
     {% if categories %}
-        {% include 'boards/parts/category_list.html' with header='Categories' categories=categories only %}
+        {% include 'app/parts/category_list.html' with header='Categories' categories=categories only %}
     {% endif %}
 
     {% if threads %}
-        {% include 'boards/parts/thread_list.html' with header='Uncategorized threads' threads=threads only %}
+        {% include 'app/parts/thread_list.html' with header='Uncategorized threads' threads=threads only %}
     {% endif %}
 
-    {% include 'boards/parts/new_thread_button.html' %}
+    {% include 'app/parts/new_thread_button.html' %}
 
 {% endblock %}

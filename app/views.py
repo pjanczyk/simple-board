@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_GET, require_http_methods
 
-from boards.forms import PostForm, ThreadForm, RegisterForm
+from app.forms import PostForm, ThreadForm, RegisterForm
 from .models import Category, Thread, Post
 
 
@@ -22,7 +22,7 @@ def index(request):
     total_posts = Post.objects.count()
     total_users = User.objects.count()
 
-    return render(request, 'boards/index.html', {
+    return render(request, 'app/index.html', {
         'categories': categories,
         'threads': threads,
         'total_threads': total_threads,
@@ -36,7 +36,7 @@ def category_detail(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     breadcrumbs = _category_breadcrumb(category, last_active=False)
 
-    return render(request, 'boards/category/detail.html', {
+    return render(request, 'app/category/detail.html', {
         'category': category,
         'breadcrumbs': breadcrumbs
     })
@@ -66,7 +66,7 @@ def thread_detail(request, thread_id):
 
     breadcrumbs = _category_breadcrumb(thread.category, last_active=True)
 
-    return render(request, 'boards/thread/detail.html', {
+    return render(request, 'app/thread/detail.html', {
         'thread': thread,
         'reply_form': form,
         'breadcrumbs': breadcrumbs
@@ -109,7 +109,7 @@ def thread_create(request, category_id):
         thread_form = ThreadForm(initial={'category': category})
         post_form = PostForm()
 
-    return render(request, 'boards/thread/create.html', {
+    return render(request, 'app/thread/create.html', {
         'thread_form': thread_form,
         'post_form': post_form
     })
@@ -135,7 +135,7 @@ def post_edit(request, post_id):
     else:  # GET
         form = PostForm(instance=post)
 
-    return render(request, 'boards/post/edit.html', {'post': post, 'post_form': form})
+    return render(request, 'app/post/edit.html', {'post': post, 'post_form': form})
 
 
 @require_http_methods(['GET', 'POST'])
@@ -157,7 +157,7 @@ def post_delete(request, post_id):
         post.delete()
         return HttpResponseRedirect(reverse('thread_detail', args=[thread_id]))
 
-    return render(request, 'boards/post/delete.html', {'post': post})
+    return render(request, 'app/post/delete.html', {'post': post})
 
 
 @require_GET
@@ -167,7 +167,7 @@ def user_detail(request, username):
     user_thread_count = len(user_threads)
     user_post_count = user.post_set.count()
 
-    return render(request, 'boards/user/detail.html', {
+    return render(request, 'app/user/detail.html', {
         'user': user,
         'user_threads': user_threads,
         'user_thread_count': user_thread_count,
@@ -187,7 +187,7 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, 'boards/auth/register.html', {'form': form})
+    return render(request, 'app/auth/register.html', {'form': form})
 
 
 class BreadcrumbItem(NamedTuple):

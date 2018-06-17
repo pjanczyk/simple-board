@@ -1,4 +1,4 @@
-{% extends 'boards/base.html' %}
+{% extends 'app/base.html' %}
 
 {% block content %}
 
@@ -13,7 +13,7 @@
         <h6 class="mb-3">Edit post</h6>
         <form method="post">
             {% csrf_token %}
-            {% include 'boards/parts/form.html' with form=post_form without_labels=True %}
+            {% include 'app/parts/form.html' with form=post_form without_labels=True %}
             <button type="submit" class="btn btn-primary d-block ml-auto">Save</button>
         </form>
     </div>

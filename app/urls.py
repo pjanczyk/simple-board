@@ -1,12 +1,12 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
-from boards import views
+from app import views
 
 urlpatterns = [
-    path('login', auth_views.LoginView.as_view(template_name='boards/auth/login.html'), name='login'),
+    path('login', auth_views.LoginView.as_view(template_name='app/auth/login.html'), name='login'),
     path('logout', auth_views.LogoutView.as_view(), name='logout'),
-    path('change-password', auth_views.PasswordChangeView.as_view(template_name='boards/auth/change_password.html'),
+    path('change-password', auth_views.PasswordChangeView.as_view(template_name='app/auth/change_password.html'),
          name='password_change'),
     path('register', views.register, name='register'),
 

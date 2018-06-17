@@ -1,4 +1,4 @@
-{% extends 'boards/base.html' %}
+{% extends 'app/base.html' %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    {% include 'boards/parts/new_thread_button.html' %}
+    {% include 'app/parts/new_thread_button.html' %}
 
     {% if category.category_set.count == 0 and category.thread_set.count == 0 %}
         <div class="my-3 p-3 bg-white rounded box-shadow">
@@ -18,13 +18,13 @@
     {% endif %}
 
     {% if category.category_set.count %}
-        {% include 'boards/parts/category_list.html' with header='Subcategories' categories=category.category_set.all only %}
+        {% include 'app/parts/category_list.html' with header='Subcategories' categories=category.category_set.all only %}
     {% endif %}
 
     {% if category.thread_set.count %}
-        {% include 'boards/parts/thread_list.html' with threads=category.thread_set.all only %}
+        {% include 'app/parts/thread_list.html' with threads=category.thread_set.all only %}
     {% endif %}
 
-    {% include 'boards/parts/new_thread_button.html' %}
+    {% include 'app/parts/new_thread_button.html' %}
 
 {% endblock %}
