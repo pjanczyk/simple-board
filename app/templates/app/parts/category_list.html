@@ -17,7 +17,7 @@
                         {% endfor %}
                         <br>
                     {% endif %}
-                    {{ category.thread_set.count }} threads
+                    {{ category.thread_set.count }} thread{{ category.thread_set.count|pluralize }}
                 </div>
             </div>
         </div>
