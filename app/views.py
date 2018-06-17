@@ -1,6 +1,7 @@
 from typing import NamedTuple, List, Optional
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
@@ -9,7 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_GET, require_http_methods
 
-from app.forms import PostForm, ThreadForm, RegisterForm
+from app.forms import PostForm, ThreadForm
 from .models import Category, Thread, Post
 
 
@@ -178,14 +179,14 @@ def user_detail(request, username):
 @require_http_methods(['GET', 'POST'])
 def register(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        form = UserCreationForm(request.POST)
 
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('login'))
 
     else:
-        form = RegisterForm()
+        form = UserCreationForm()
 
     return render(request, 'app/auth/register.html', {'form': form})
 

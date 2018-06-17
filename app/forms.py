@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 
 from app.models import Post, Thread
 
@@ -20,9 +19,3 @@ class ThreadForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput()
         }
-
-
-class RegisterForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password']

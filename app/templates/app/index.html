@@ -13,10 +13,12 @@
         </div>
     </div>
 
-    <div class="my-3 p-3 rounded box-shadow alert alert-primary">
-        <h6 class="mb-3">Sign up to create a new thread or reply in an existing one</h6>
-        <a class="btn btn-primary btn-sm ml-auto" href="{% url 'register' %}">Sign up</a>
-    </div>
+    {% if not request.user.is_authenticated %}
+        <div class="my-3 p-3 rounded box-shadow alert alert-primary">
+            <h6 class="mb-3">Sign up to create a new thread or reply in an existing one</h6>
+            <a class="btn btn-primary btn-sm ml-auto" href="{% url 'register' %}">Sign up</a>
+        </div>
+    {% endif %}
 
     {% include 'app/parts/new_thread_button.html' %}
 

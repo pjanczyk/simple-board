@@ -2,16 +2,7 @@
 
 {% block content %}
 
-    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded box-shadow">
-        <div class="lh-100">
-            <h6 class="mb-0 text-white lh-100">{{ thread.title }}</h6>
-            <small>
-                author:
-                {% include 'app/parts/username.html' with user=thread.original_author class="text-light" %}
-                » {{ thread.created_at }}
-            </small>
-        </div>
-    </div>
+    {% include 'app/parts/thread_header.html' with thread=post.thread only %}
 
     {% for post in thread.post_set.all %}
         <div class="my-3 p-3 bg-white rounded box-shadow">
