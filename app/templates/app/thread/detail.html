@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% include 'app/parts/thread_header.html' with thread=post.thread only %}
+    {% include 'app/parts/thread_header.html' with thread=thread only %}
 
     {% for post in thread.post_set.all %}
         <div class="my-3 p-3 bg-white rounded box-shadow">

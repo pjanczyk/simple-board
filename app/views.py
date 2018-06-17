@@ -126,7 +126,7 @@ def post_edit(request, post_id):
         if not request.user.is_authenticated or request.user.id != post.author_id:
             raise PermissionDenied
 
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, instance=post)
 
         if form.is_valid():
             form.save()
