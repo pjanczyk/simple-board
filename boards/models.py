@@ -41,21 +41,6 @@ class Thread(models.Model):
     def original_author(self):
         return self.original_post.author
 
-    # @property
-    # def original_post(self):
-    #     try:
-    #         return self.post_set.all()[0:1].get()
-    #     except Post.DoesNotExist:
-    #         return None
-    #
-    # @property
-    # def original_author(self):
-    #     p = self.original_post
-    #     if p is not None:
-    #         return p.author
-    #     else:
-    #         return None
-
 
 class Post(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
@@ -70,3 +55,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.text
+
+    def is_original_post(self):
+        return self.pk == self.thread.original_post.pk

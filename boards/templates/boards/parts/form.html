@@ -32,9 +32,9 @@
                 {% endfor %}
             {% else %}
                 {% if without_labels %}
-                    {% render_field field class="form-control is-valid" placeholder=field.label %}
+                    {% render_field field class="form-control" placeholder=field.label %}
                 {% else %}
-                    {% render_field field class="form-control is-valid" %}
+                    {% render_field field class="form-control" %}
                 {% endif %}
             {% endif %}
         {% else %}
@@ -42,7 +42,7 @@
         {% endif %}
 
         {% if field.help_text %}
-            <small class="form-text text-muted">{{ field.help_text }}</small>
+            <small class="form-text text-muted">{{ field.help_text|safe }}</small>
         {% endif %}
     </div>
 {% endfor %}

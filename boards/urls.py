@@ -6,7 +6,8 @@ from boards import views
 urlpatterns = [
     path('login', auth_views.LoginView.as_view(template_name='boards/auth/login.html'), name='login'),
     path('logout', auth_views.LogoutView.as_view(), name='logout'),
-    path('change-password', auth_views.PasswordChangeView.as_view(), name='password_change'),
+    path('change-password', auth_views.PasswordChangeView.as_view(template_name='boards/auth/change_password.html'),
+         name='password_change'),
     path('register', views.register, name='register'),
 
     path('', views.index, name='index'),

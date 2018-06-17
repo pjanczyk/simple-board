@@ -10,13 +10,14 @@
                 </div>
                 <div>
                     {% if category.category_set.count %}
-                        Subcategories:
+                        subcategories:
                         {% for subcategory in category.category_set.all %}
                             <span class="comma-separated-item"><a
                                     href="{% url 'category_detail' subcategory.id %}">{{ subcategory.name }}</a></span>
                         {% endfor %}
+                        <br>
                     {% endif %}
-                    {{ category.thread_set.count }} threads.
+                    {{ category.thread_set.count }} threads
                 </div>
             </div>
         </div>

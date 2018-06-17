@@ -2,6 +2,36 @@
 
 {% block content %}
 
-    {% include 'boards/parts/category_list.html' with categories=categories only %}
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded box-shadow">
+        <div class="lh-100">
+            <h6 class="mb-0 text-white lh-100">Welcome to SimpleBoard</h6>
+            <small>
+                We currently have {{ total_threads }} thread{{ total_threads|pluralize }}
+                and {{ total_post }} post{{ total_post|pluralize }}
+            </small>
+        </div>
+    </div>
+
+    <a href="{% url 'thread_create' 0 %}" class="btn btn-primary btn-sm box-shadow" role="button">
+        <i class="fas fa-plus"></i> New thread
+    </a>
+
+    {% if category.category_set.count == 0 and category.thread_set.count == 0 %}
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+            <h6 class="my-1">No threads or subcategories</h6>
+        </div>
+    {% endif %}
+
+    {% if categories %}
+        {% include 'boards/parts/category_list.html' with header='Categories' categories=categories only %}
+    {% endif %}
+
+    {% if threads %}
+        {% include 'boards/parts/thread_list.html' with header='Uncategorized threads' threads=threads only %}
+    {% endif %}
+
+    <a href="{% url 'thread_create' 0 %}" class="btn btn-primary btn-sm box-shadow" role="button">
+        <i class="fas fa-plus"></i> New thread
+    </a>
 
 {% endblock %}

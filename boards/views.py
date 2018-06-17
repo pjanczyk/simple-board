@@ -17,9 +17,14 @@ def index(request):
     categories = Category.objects.filter(parent_category=None)
     threads = Thread.objects.filter(category=None)
 
+    total_threads = Thread.objects.count()
+    total_posts = Post.objects.count()
+
     return render(request, 'boards/index.html', {
         'categories': categories,
-        'threads': threads
+        'threads': threads,
+        'total_threads': total_threads,
+        'total_post': total_posts
     })
 
 
@@ -67,7 +72,10 @@ def thread_detail(request, thread_id):
 @require_http_methods(['GET', 'POST'])
 @login_required
 def thread_create(request, category_id):
-    category = get_object_or_404(Category, id=category_id)
+    try:
+        category = Category.objects.get(id=category_id)
+    except Category.DoesNotExist:
+        category = None
 
     if request.method == 'POST':
         thread_form = ThreadForm(request.POST)
@@ -87,12 +95,13 @@ def thread_create(request, category_id):
                 post.thread_id = thread.id
                 post.save()
 
+            return HttpResponseRedirect(reverse('thread_detail', args=[thread.id]))
+
     else:
-        thread_form = ThreadForm()
+        thread_form = ThreadForm(initial={'category': category})
         post_form = PostForm()
 
     return render(request, 'boards/thread/create.html', {
-        'category': category,
         'thread_form': thread_form,
         'post_form': post_form
     })
