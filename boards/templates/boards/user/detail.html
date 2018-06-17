@@ -4,8 +4,11 @@
 
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded box-shadow">
         <div class="lh-100">
-            <h6 class="mb-0 text-white lh-100">@{{ user.username }}</h6>
-            <small>{{ user.first_name }} {{ user.last_name }}</small>
+            <h6 class="mb-1 text-white lh-100">@{{ user.username }}</h6>
+            <small>
+                {{ user_thread_count }} thread{{ user_thread_count|pluralize }}<br>
+                {{ user_post_count }} post{{ user_post_count|pluralize }}
+            </small>
         </div>
     </div>
 

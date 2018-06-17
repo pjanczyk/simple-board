@@ -7,12 +7,7 @@
             <h6 class="mb-0 text-white lh-100">{{ thread.title }}</h6>
             <small>
                 author:
-                {% if thread.original_author %}
-                    <a class="text-light"
-                       href="{% url 'user_detail' thread.original_author.username %}">@{{ thread.original_author.username }}</a>
-                {% else %}
-                    <strike>deleted</strike>
-                {% endif %}
+                {% include 'boards/parts/username.html' with user=thread.original_author class="text-light" %}
                 » {{ thread.created_at }}
             </small>
         </div>
@@ -20,7 +15,7 @@
 
     {% for post in thread.post_set.all %}
         <div class="my-3 p-3 bg-white rounded box-shadow">
-            <div class="media text-muted border-bottom border-gray">
+            <div class="media text-muted border-bottom">
                 <div class="d-flex align-items-center justify-content-center mr-2 rounded bg-secondary p-1 text-white"
                      style="width: 32px; height: 32px;">
                     <i class="fas fa-user fa-lg align-center"></i>
@@ -56,7 +51,7 @@
         <h6 class="pb-2 mb-0">Reply</h6>
         <form method="post" class="d-flex">
             {% csrf_token %}
-            <textarea class="textarea-autosize form-control" id="reply-text" rows="3" minlength="1" required
+            <textarea class="form-control" id="reply-text" rows="3" minlength="1" required
                       name="{{ reply_form.text.html_name }}"></textarea>
             <button type="submit" class="btn btn-primary d-block ml-2">Send</button>
         </form>

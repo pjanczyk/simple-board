@@ -1,0 +1,5 @@
+{% if user %}
+    <a class="{{ class }}" href="{% url 'user_detail' user.username %}">@{{ user.username }}</a>
+{% else %}
+    <strike class="{{ class }}">deleted</strike>
+{% endif %}

@@ -12,8 +12,8 @@
     </div>
 
     <div class="my-3 p-3 bg-white rounded box-shadow">
-        <h5 class="mb-3 pb-2 border-bottom border-gray">Delete post?</h5>
-        <div class="media text-muted border-bottom border-gray">
+        <h5 class="mb-3 pb-2 border-bottom">Delete post?</h5>
+        <div class="media text-muted border-bottom">
             <div class="d-flex align-items-center justify-content-center mr-2 rounded bg-secondary p-1 text-white"
                  style="width: 32px; height: 32px;">
                 <i class="fas fa-user fa-lg align-center"></i>
@@ -28,7 +28,7 @@
         <div class="mt-2">
             {{ post.text }}
         </div>
-        <form method="post" class="border-top border-gray mt-2 pt-2">
+        <form method="post" class="border-top mt-2 pt-2">
             {% csrf_token %}
             <button type="submit" name="confirm_delete" class="btn btn-danger d-block ml-auto">Delete</button>
         </form>

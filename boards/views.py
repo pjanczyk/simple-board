@@ -139,10 +139,14 @@ def post_delete(request, post_id):
 def user_detail(request, username):
     user = get_object_or_404(User, username=username)
     user_threads = Thread.objects.filter(original_post__author=user)
+    user_thread_count = len(user_threads)
+    user_post_count = user.post_set.count()
 
     return render(request, 'boards/user/detail.html', {
         'user': user,
-        'user_threads': user_threads
+        'user_threads': user_threads,
+        'user_thread_count': user_thread_count,
+        'user_post_count': user_post_count
     })
 
 

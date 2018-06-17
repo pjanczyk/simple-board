@@ -1,8 +1,8 @@
 <div class="my-3 p-3 bg-white rounded box-shadow">
-    <h6 class="border-bottom border-gray pb-2 mb-0">{{ header|default:"Categories" }}</h6>
+    <h6 class="border-bottom pb-2 mb-0">{{ header|default:"Categories" }}</h6>
     {% for category in categories %}
         <div class="media text-muted pt-3">
-            <div class="media-body mb-0 small lh-125 {% if not forloop.last %}pb-3 border-bottom border-gray{% endif %}">
+            <div class="media-body mb-0 small lh-125 {% if not forloop.last %}pb-3 border-bottom{% endif %}">
                 <div>
                     <a class="font-weight-bold" href="{% url 'category_detail' category.id %}">
                         {{ category.name }}

@@ -14,18 +14,28 @@
 
 {% for field in form.visible_fields %}
     <div class="form-group">
-        {{ field.label_tag }}
+        {% if not without_labels %}
+            {{ field.label_tag }}
+        {% endif %}
 
         {% if form.is_bound %}
             {% if field.errors %}
-                {% render_field field class="form-control is-invalid" %}
+                {% if without_labels %}
+                    {% render_field field class="form-control is-invalid" placeholder=field.label %}
+                {% else %}
+                    {% render_field field class="form-control is-invalid" %}
+                {% endif %}
                 {% for error in field.errors %}
                     <div class="invalid-feedback">
                         {{ error }}
                     </div>
                 {% endfor %}
             {% else %}
-                {% render_field field class="form-control is-valid" %}
+                {% if without_labels %}
+                    {% render_field field class="form-control is-valid" placeholder=field.label %}
+                {% else %}
+                    {% render_field field class="form-control is-valid" %}
+                {% endif %}
             {% endif %}
         {% else %}
             {% render_field field class="form-control" %}

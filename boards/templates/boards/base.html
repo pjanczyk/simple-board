@@ -21,43 +21,32 @@
 </head>
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top box-shadow">
+<nav class="navbar navbar-light bg-white fixed-top box-shadow">
     <a class="navbar-brand" href="{% url 'index' %}">SimpleBoard</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav ml-auto mr-3">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Users</a>
-            </li>
-        </ul>
-        {% if request.user.is_authenticated %}
-            <div class="dropdown">
-                <div class="btn btn-link dropdown-toggle d-flex align-items-center p-0"
-                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">
-                    <div class="d-inline-flex align-items-center justify-content-center mr-2 rounded bg-secondary p-1 text-white"
-                         style="width: 32px; height: 32px;">
-                        <i class="fas fa-user fa-lg align-center"></i>
-                    </div>
+    {% if request.user.is_authenticated %}
+        <div class="dropdown">
+            <div class="btn btn-link dropdown-toggle d-flex align-items-center p-0"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">
+                <div class="d-inline-flex align-items-center justify-content-center mr-2 rounded bg-secondary p-1 text-white"
+                     style="width: 32px; height: 32px;">
+                    <i class="fas fa-user fa-lg align-center"></i>
+                </div>
 
-                    <span class="lh-125">
+                <span class="lh-125">
                         <strong>@{{ request.user.username }}</strong>
                     </span>
 
-                </div>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{% url 'user_detail' request.user.username %}">View profile</a>
-                    <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
-                </div>
             </div>
-        {% else %}
-            <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'login' %}">Sign in</a>
-        {% endif %}
-    </div>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'user_detail' request.user.username %}">View profile</a>
+                <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+            </div>
+        </div>
+    {% else %}
+        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'login' %}">Sign in</a>
+    {% endif %}
 </nav>
 
 <main role="main" class="container pb-5">
@@ -92,7 +81,7 @@
         crossorigin="anonymous"></script>
 
 <script>
-    autosize(document.getElementsByClassName('textarea-autosize'));
+    autosize(document.getElementsByTagName('textarea'));
 </script>
 
 </body>
